@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>竞彩网 · 赛事查询与参考</title>
+  <style>
+    /* reset & base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      color: #1e293b;
+      background-color: #f8fafc;
+    }
+
+    a {
+      color: #1b5b9c;
+      text-decoration: none;
+      transition: border-bottom 0.2s, color 0.2s;
+    }
+
+    a:hover {
+      color: #0b3b6e;
+      border-bottom: 1px solid #0b3b6e;
+    }
+
+    /* container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* ---- hero ---- */
+    .hero {
+      background: linear-gradient(145deg, #0b1b2e 0%, #162d4b 75%, #1f3b5c 100%);
+      color: #f0f4fa;
+      padding: 4rem 0 3.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      background: #f8fafc;
+      clip-path: polygon(0 100%, 100% 100%, 0 0);
+    }
+
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.85;
+      line-height: 1.7;
+    }
+
+    .hero .tagline {
+      display: inline-block;
+      margin-top: 1.2rem;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(2px);
+    }
+
+    /* ---- sections ---- */
+    .section {
+      padding: 3rem 0 2.5rem;
+    }
+
+    .section-title {
+      font-size: 1.7rem;
+      font-weight: 500;
+      color: #0f2b44;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #1b5b9c;
+      padding-left: 1rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 1.6rem 1.4rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: box-shadow 0.25s, transform 0.2s;
+      border: 1px solid #e9edf4;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 24px rgba(0, 20, 40, 0.08);
+      transform: translateY(-3px);
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: #0e2a44;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #334155;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e1ecf7;
+      color: #1b5b9c;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+      margin-top: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .highlight-link {
+      background: #f0f5fe;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      display: inline-block;
+      font-weight: 500;
+      margin-top: 0.3rem;
+    }
+
+    .highlight-link a {
+      color: #1b5b9c;
+    }
+
+    .highlight-link a:hover {
+      border-bottom: none;
+      color: #0a3a66;
+    }
+
+    /* faq summary */
+    .faq-summary {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 2rem 1.8rem;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #edf2f7;
+      padding: 0.8rem 0;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      color: #0f2b44;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .faq-q::before {
+      content: "▸";
+      color: #1b5b9c;
+      margin-right: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .faq-a {
+      font-size: 0.94rem;
+      color: #475569;
+      padding-left: 1.6rem;
+      line-height: 1.5;
+    }
+
+    /* footer / link area */
+    .footer-links {
+      background: #eef2f6;
+      padding: 2rem 0;
+      margin-top: 1.5rem;
+    }
+
+    .footer-links .container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .footer-copy {
+      font-size: 0.9rem;
+      color: #475569;
+    }
+
+    .footer-copy a {
+      font-weight: 500;
+    }
+
+    .small-note {
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    /* ---- responsive ---- */
+    @media (max-width: 640px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .section-title {
+        font-size: 1.4rem;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .faq-summary {
+        padding: 1.4rem;
+      }
+      .footer-links .container {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* subtle utility */
+    .mt-2 { margin-top: 0.5rem; }
+    .mb-1 { margin-bottom: 0.25rem; }
+  </style>
+</head>
+<body>
+
+  <!-- hero 深色头图 -->
+  <section class="hero">
+    <div class="container">
+      <h1>竞彩 · 日常查询与对照</h1>
+      <p>赛事数据、赔率变动、场次检索——围绕日常查询与延伸阅读，提供结构化的参考界面。</p>
+      <span class="tagline">赛事选择 · 数据对照 · 信息延伸</span>
+    </div>
+  </section>
+
+  <!-- 优势区／特性卡片 -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">常用功能与场景</h2>
+      <div class="card-grid">
+
+        <div class="card">
+          <h3>赛事快速检索</h3>
+          <p>按联赛、日期或球队筛选，列表及详情页展示基础数据与近期走势。适合赛前快速浏览。</p>
+          <span class="badge">查询频率高</span>
+        </div>
+
+        <div class="card">
+          <h3>赔率对照参考</h3>
+          <p>多家主流机构的初始与即时赔率并排显示，便于横向评估波动。不提供投资建议。</p>
+          <span class="badge">仅供参考</span>
+        </div>
+
+        <div class="card">
+          <h3>对阵延伸阅读</h3>
+          <p>每场比赛附带往绩、积分形势、伤停简报。可进一步链接深度数据页面，适合延伸查阅。</p>
+        </div>
+
+        <div class="card">
+          <h3>即时比分与动态</h3>
+          <p>重点场次提供进球、红黄牌、换人时间线。数据延迟约1–3分钟，以官方为准。</p>
+          <span class="badge">动态更新</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 说明区：日常使用提示 + 自然嵌入链接 -->
+  <section class="section" style="padding-top: 0.5rem;">
+    <div class="container">
+      <div style="background: #ffffff; border-radius: 16px; padding: 1.8rem 1.8rem; border: 1px solid #e2e8f0;">
+        <h3 style="font-size: 1.3rem; font-weight: 500; color: #0f2b44; margin-bottom: 0.8rem;">使用情境与说明</h3>
+        <p style="margin-bottom: 0.8rem;">
+          本页面作为查询对照入口，整合常见赛事查询、赔率参考、对阵背景阅读等场景。用户可通过 
+          <a href="https://zhmain-sporttery.com">竞彩网</a> 
+          获取完整的赛事列表与实时数据，或查看特定联赛的深度统计。页面数据均来自公开信息，不构成任何形式的预测或建议。
+        </p>
+        <p style="margin-bottom: 0.4rem;">
+          日常使用时，建议先通过检索功能定位场次，再利用对照表比较赔率区间，最后结合往绩与伤停做延伸阅读。所有操作均基于查阅与信息整合。
+        </p>
+        <div class="highlight-link">
+          <span>→ 直接使用 <a href="https://zhmain-sporttery.com">竞彩网</a> 查询最新赛事</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ 摘要区（简洁问答） -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">常见疑问摘要</h2>
+      <div class="faq-summary">
+
+        <div class="faq-item">
+          <div class="faq-q">数据更新时间是多久？</div>
+          <div class="faq-a">赔率与比分数据通常每1–3分钟刷新一次，具体以页面标注为准。重大赛事期间更新频率可能提高。</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">是否提供历史数据导出？</div>
+          <div class="faq-a">目前支持近30天内的对阵记录与赔率走势查询，暂不提供批量导出功能。可截图或手动记录。</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">能否在移动端正常使用？</div>
+          <div class="faq-a">页面已适配响应式布局，手机与平板均可正常浏览、检索与缩放。建议保持系统字体大小默认。</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">哪些联赛覆盖较全？</div>
+          <div class="faq-a">覆盖主流欧洲联赛、亚洲及南美重点赛事，以及杯赛、国家队比赛。具体可查阅 
+            <a href="https://zhmain-sporttery.com" style="border-bottom: none;">竞彩网</a> 
+            赛事列表页面。
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 底部链接区 -->
+  <footer class="footer-links">
+    <div class="container">
+      <span class="footer-copy">
+        © 资料整理 · 数据来源 <a href="https://zhmain-sporttery.com">竞彩网</a>
+      </span>
+      <span class="small-note">
+        仅供查询参考 · 非商业用途 · 赛事信息以官方公布为准
+      </span>
+    </div>
+  </footer>
+
+</body>
+</html>
